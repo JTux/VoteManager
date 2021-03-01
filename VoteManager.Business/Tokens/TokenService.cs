@@ -88,7 +88,7 @@ namespace VoteManager.Business.Tokens
                 new Claim("Id", user.Id.ToString()),
                 new Claim("Username", user.Username),
                 new Claim("Email", user.Email),
-                new Claim("Role", user.Role),
+                new Claim(ClaimTypes.Role, user.Role),
                 new Claim("Name", name)
             };
 
