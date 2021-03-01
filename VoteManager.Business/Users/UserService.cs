@@ -26,7 +26,8 @@ namespace VoteManager.Business.Users
             {
                 Email = model.Email,
                 Username = model.Username,
-                DateCreated = DateTime.Now
+                DateCreated = DateTime.Now,
+                Role = role
             };
 
             var passwordHasher = new PasswordHasher<UserEntity>();
