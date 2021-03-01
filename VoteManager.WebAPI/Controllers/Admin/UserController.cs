@@ -33,5 +33,15 @@ namespace VoteManager.WebAPI.Controllers_Admin
 
             return BadRequest(new { Message = "User could not be registered." });
         }
+
+        [HttpPut("{userId}/Reactivate")]
+        public async Task<IActionResult> ReactivateAccount([FromRoute] int userId)
+        {
+            var deactivationResponse = await _userService.ReactivateUserAsync(userId);
+            if (deactivationResponse)
+                return Ok(new { Message = $"User {userId} reactivated." });
+
+            return BadRequest(new { Message = "Could not reactivate the targeted user." });
+        }
     }
 }

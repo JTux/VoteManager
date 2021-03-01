@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -51,6 +52,19 @@ namespace VoteManager.WebAPI.Controllers
                 return BadRequest(new { Message = "Invalid username or password." });
 
             return Ok(tokenResponse);
+        }
+
+        [HttpPut("{userId}/Deactivate")]
+        public async Task<IActionResult> DeactivateAccount([FromRoute] int userId)
+        {
+            if (userId.ToString() != (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value && !User.IsInRole("Admin"))
+                return Unauthorized();
+
+            var deactivationResponse = await _userService.DeactivateUserAsync(userId);
+            if (deactivationResponse)
+                return Ok(new { Message = $"User {userId} deactivated." });
+
+            return BadRequest(new { Message = "Could not deactivate the targeted user." });
         }
     }
 }

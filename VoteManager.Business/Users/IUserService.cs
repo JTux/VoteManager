@@ -7,5 +7,7 @@ namespace VoteManager.Business.Users
     {
         Task<bool> RegisterUserAsync(UserRegister model);
         Task<bool> RegisterUserAsync(UserRegister model, string role);
+        Task<bool> ReactivateUserAsync(int userId);
+        Task<bool> DeactivateUserAsync(int userId);
     }
 }

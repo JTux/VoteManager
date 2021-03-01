@@ -26,7 +26,7 @@ namespace VoteManager.Business.Tokens
         public async Task<TokenResponse> GetTokenAsync(TokenRequest request)
         {
             var userEntity = await GetValidUserAsync(request);
-            if (userEntity is null)
+            if (userEntity is null || userEntity.IsDeactivated)
                 return null;
 
             return GenerateToken(userEntity);

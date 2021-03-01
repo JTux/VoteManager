@@ -37,6 +37,31 @@ namespace VoteManager.Business.Users
             return await _context.SaveChangesAsync() == 1;
         }
 
+        public async Task<bool> ReactivateUserAsync(int userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if (user is null || !user.IsDeactivated)
+                return false;
+
+            user.IsDeactivated = false;
+            _context.Entry(user).State = EntityState.Modified;
+
+            return await _context.SaveChangesAsync() == 1;
+
+        }
+
+        public async Task<bool> DeactivateUserAsync(int userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if (user is null || user.IsDeactivated)
+                return false;
+
+            user.IsDeactivated = true;
+            _context.Entry(user).State = EntityState.Modified;
+
+            return await _context.SaveChangesAsync() == 1;
+        }
+
         private async Task<bool> VerifyUserInfoIsValidAsync(string email, string username)
         {
             return !await _context.Users.AnyAsync(user =>
