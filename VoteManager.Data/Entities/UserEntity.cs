@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace VoteManager.Data.Entities
@@ -29,5 +30,7 @@ namespace VoteManager.Data.Entities
 
         [Required]
         public bool IsDeactivated { get; set; }
+
+        public List<MembershipEntity> Memberships { get; set; }
     }
 }
